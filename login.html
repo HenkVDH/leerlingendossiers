@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login – CampusPortal</title>
+<link rel="icon" href="favicon.ico"><link rel="stylesheet" href="assets/styles.css">
+<script>
+function doLogin(){
+  const u=document.getElementById('u').value.trim();
+  const p=document.getElementById('p').value;
+  const allowed=[{u:'student',p:'demo123',role:'student'},{u:'lector',p:'demo123',role:'lector'}];
+  const ok=allowed.find(a=>a.u===u && a.p===p);
+  if(ok){ localStorage.setItem('cp_auth', JSON.stringify({ok:true,user:ok.u,role:ok.role,t:Date.now()})); location.href='index.html'; }
+  else{ alert('Onjuiste gegevens. Probeer student/demo123 of lector/demo123.'); }
+  return false;
+}
+</script>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="logo" style="justify-content:center;margin-bottom:8px;"><img src="assets/logo.png" alt="logo"><span>CampusPortal</span></div>
+    <form onsubmit="return doLogin()">
+      <label for="u">Gebruikersnaam</label>
+      <input id="u" placeholder="student of lector" required>
+      <label for="p">Wachtwoord</label>
+      <input id="p" type="password" placeholder="demo123" required>
+      <button type="submit">Inloggen</button>
+    </form>
+    <p class="note">Demo-accounts: <code>student/demo123</code> of <code>lector/demo123</code>.</p>
+  </div>
+</div>
+</body>
+</html>
